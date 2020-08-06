@@ -4,10 +4,23 @@ jobs:
     runs-on: [ubuntu-18.04]
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
-      - run: mkdir src       
+      - run: mkdir src
+      - uses: actions/checkout@v2
+        with:
+          repository: 'nasa/irg_open'
+          path: src/irg_ope
       - uses: actions/checkout@v2
         with:
           repository: 'nasa/ow_simulator'
           path: src/ow_simulator
+      - uses: actions/checkout@v2
+        with:
+          repository: 'nasa/ow_europa'
+          path: src/ow_europa
+      - uses: actions/checkout@v2
+        with:
+          repository: 'nasa/ow_autonomy'
+          path: src/ow_autonomy
+      - run: source /opt/ros/melodic/setub.bash
       - run: catkin init
       - run: catkin build

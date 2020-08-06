@@ -1,0 +1,11 @@
+on: [push, pull_request]
+jobs:
+  lets-build:
+    runs-on: [ubuntu-18.04]
+    steps:
+      - uses: docker://oceanwaters/builder:ros-melodic-desktop-full
+      - uses: actions/checkout@v2
+        with:
+          repository: 'nasa/ow_simulator'
+      - run: echo $(pwd)
+      - run: catkin build

@@ -2,8 +2,8 @@ on: [push, pull_request]
 jobs:
   lets-build:
     runs-on: [ubuntu-18.04]
+    container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
-      - uses: docker://oceanwaters/builder:ros-melodic-desktop-full
       - uses: actions/checkout@v2
         with:
           repository: 'nasa/ow_simulator'

@@ -21,6 +21,6 @@ jobs:
         with:
           repository: 'nasa/ow_autonomy'
           path: src/ow_autonomy
-      - run: source /opt/ros/melodic/setub.bash
+      - run: source /opt/ros/melodic/setup.bash
       - run: catkin init
       - run: catkin build

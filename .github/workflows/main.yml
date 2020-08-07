@@ -4,6 +4,7 @@ jobs:
     runs-on: [ubuntu-18.04]
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
+      - run: build_plexil.sh
       - run: mkdir src
       - uses: actions/checkout@v2
         with:
@@ -21,6 +22,4 @@ jobs:
         with:
           repository: 'nasa/ow_autonomy'
           path: src/ow_autonomy
-      - run: source /opt/ros/melodic/setup.bash
-      - run: catkin init
-      - run: catkin build
+      - run: build_oceanwaters.sh

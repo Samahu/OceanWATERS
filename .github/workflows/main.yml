@@ -6,8 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-        repository: 'Samahu/OceanWATERS'
-        path: .
+          repository: 'Samahu/OceanWATERS'
+          path: .
       - run: ls -R
       - run: build_plexil.sh
       - run: mkdir src

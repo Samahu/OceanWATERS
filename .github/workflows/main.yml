@@ -5,7 +5,7 @@ jobs:
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
       - uses: actions/checkout@v2
-      with:
+        with:
         repository: 'Samahu/OceanWATERS'
         path: .
       - run: ls -R

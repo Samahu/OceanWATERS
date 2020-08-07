@@ -4,6 +4,7 @@ jobs:
     runs-on: [ubuntu-18.04]
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
+      - run: ls -R
       - run: build_plexil.sh
       - run: mkdir src
       - uses: actions/checkout@v2

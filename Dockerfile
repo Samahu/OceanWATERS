@@ -7,6 +7,8 @@ RUN apt-get install -y git gnupg2 wget
 
 RUN . /etc/lsb-release
 
+RUN echo $DISTRIB_CODENAME
+
 RUN echo "deb http://packages.ros.org/ros/ubuntu $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/ros-latest.list
 RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 

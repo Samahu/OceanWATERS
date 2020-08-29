@@ -5,6 +5,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get install -y git gnupg2 wget
 
+#RUN /bin/bash -c "source /etc/lsb-release" #TODO: investigate later
+ARG DISTRIB_CODENAME=bionic
+
 RUN echo "deb http://packages.ros.org/ros/ubuntu $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/ros-latest.list
 RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 

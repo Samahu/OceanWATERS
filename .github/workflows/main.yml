@@ -12,25 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: 'Samahu/OceanWATERS'
-          path: .
+          submodules: 'true'
       - run: ls
       - run: ./build_plexil.sh
       - run: mkdir src
-      - uses: actions/checkout@v2
-        with:
-          repository: 'nasa/irg_open'
-          path: src/irg_ope
-      - uses: actions/checkout@v2
-        with:
-          repository: 'nasa/ow_simulator'
-          path: src/ow_simulator
-      - uses: actions/checkout@v2
-        with:
-          repository: 'nasa/ow_europa'
-          path: src/ow_europa
-      - uses: actions/checkout@v2
-        with:
-          repository: 'nasa/ow_autonomy'
-          path: src/ow_autonomy
       - run: ./build_oceanwaters.sh

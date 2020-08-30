@@ -1,0 +1,12 @@
+[submodule "irg_open"]
+	path = irg_open
+	url = https://github.com/nasa/irg_open
+[submodule "ow_simulator"]
+	path = ow_simulator
+	url = https://github.com/nasa/ow_simulator
+[submodule "ow_europa"]
+	path = ow_europa
+	url = https://github.com/nasa/ow_europa
+[submodule "ow_autonomy"]
+	path = ow_autonomy
+	url = https://github.com/nasa/ow_autonomy

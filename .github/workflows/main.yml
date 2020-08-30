@@ -12,7 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: 'true'
+          token: ${{ secrets.MY_REPO_PAT }}
+          submodules: true
       - run: ls
       - run: ./build_plexil.sh
       - run: mkdir src

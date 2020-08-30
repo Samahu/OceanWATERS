@@ -1,4 +1,10 @@
-on: [push, pull_request]
+name: Build OceanWATERS
+on:
+  push:
+  pull_request:
+    types: closed
+    branches:
+      - master
 jobs:
   lets-build:
     runs-on: [ubuntu-18.04]

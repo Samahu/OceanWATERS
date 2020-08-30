@@ -1,22 +1,21 @@
 FROM ubuntu:18.04
 
-ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+    && apt-get install -y git gnupg2 wget
 
-RUN apt-get update
-RUN apt-get install -y git gnupg2 wget
-
-#RUN /bin/bash -c "source /etc/lsb-release" #TODO: investigate later
 ARG DISTRIB_CODENAME=bionic
 
-RUN echo "deb http://packages.ros.org/ros/ubuntu $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/ros-latest.list
-RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+RUN echo "deb http://packages.ros.org/ros/ubuntu $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/ros-latest.list \
+    && apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/gazebo-stable.list
-RUN wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
+RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/gazebo-stable.list \
+    && wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 
-RUN apt-get update
-RUN apt-get install -y ros-melodic-desktop-full
-RUN apt-get upgrade -y
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y ros-melodic-desktop-full \
+    && apt-get upgrade -y
 
 RUN apt-get install -y python-catkin-tools \
 ros-melodic-tf2-ros \

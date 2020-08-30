@@ -1,14 +1,14 @@
 FROM ubuntu:18.04
 
 RUN apt-get update \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository ppa:git-core/ppa -y \
     && apt-get install -y git gnupg2 wget
 
-ARG DISTRIB_CODENAME=bionic
-
-RUN echo "deb http://packages.ros.org/ros/ubuntu $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/ros-latest.list \
+RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list \
     && apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/gazebo-stable.list \
+RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -sc) main" > /etc/apt/sources.list.d/gazebo-stable.list \
     && wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 
 ARG DEBIAN_FRONTEND=noninteractive

@@ -6,15 +6,22 @@ on:
     branches:
       - master
 jobs:
-  lets-build:
+  build:
     runs-on: [ubuntu-18.04]
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.MY_REPO_PAT }}
           submodules: true
-      - run: ls
       - run: ./build_plexil.sh
-      - run: mkdir src
       - run: ./build_oceanwaters.sh
+
+  test:
+    runs-on: [ubuntu-18.04]
+    container: oceanwaters/builder:ros-melodic-desktop-full
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - run: ./build_plexil.sh
+      - run: ./test_oceanwaters.sh

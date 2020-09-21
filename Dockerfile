@@ -1,4 +1,5 @@
 ARG BASE_DOCKER_IMAGE=ubuntu:18.04
+ARG ROS_DISTRO=melodic
 
 FROM $BASE_DOCKER_IMAGE
 
@@ -16,32 +17,32 @@ RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_relea
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
-    && apt-get install -y ros-melodic-desktop-full \
+    && apt-get install -y ros-${ROS_DISTRO}-desktop-full \
     python-catkin-tools \
-    ros-melodic-tf2-ros \
-    ros-melodic-robot-state-publisher \
-    ros-melodic-joint-state-publisher \
-    ros-melodic-joint-state-controller \
-    ros-melodic-effort-controllers \
-    ros-melodic-dynamic-reconfigure \
-    ros-melodic-nodelet \
-    ros-melodic-nodelet-topic-tools \
-    ros-melodic-camera-info-manager \
-    ros-melodic-tf2-geometry-msgs \
-    ros-melodic-gazebo-ros-control \
-    ros-melodic-xacro \
-    ros-melodic-rviz-visual-tools \
-    ros-melodic-rqt-plot \
-    ros-melodic-rqt-rviz \
-    ros-melodic-rqt-image-view \
-    ros-melodic-rqt-common-plugins \
-    ros-melodic-gazebo-plugins \
-    ros-melodic-moveit \
-    ros-melodic-moveit-ros-visualization \
-    ros-melodic-geometry-msgs \
-    ros-melodic-cmake-modules \
-    ros-melodic-stereo-msgs \
-    ros-melodic-stereo-image-proc \
+    ros-${ROS_DISTRO}-tf2-ros \
+    ros-${ROS_DISTRO}-robot-state-publisher \
+    ros-${ROS_DISTRO}-joint-state-publisher \
+    ros-${ROS_DISTRO}-joint-state-controller \
+    ros-${ROS_DISTRO}-effort-controllers \
+    ros-${ROS_DISTRO}-dynamic-reconfigure \
+    ros-${ROS_DISTRO}-nodelet \
+    ros-${ROS_DISTRO}-nodelet-topic-tools \
+    ros-${ROS_DISTRO}-camera-info-manager \
+    ros-${ROS_DISTRO}-tf2-geometry-msgs \
+    ros-${ROS_DISTRO}-gazebo-ros-control \
+    ros-${ROS_DISTRO}-xacro \
+    ros-${ROS_DISTRO}-rviz-visual-tools \
+    ros-${ROS_DISTRO}-rqt-plot \
+    ros-${ROS_DISTRO}-rqt-rviz \
+    ros-${ROS_DISTRO}-rqt-image-view \
+    ros-${ROS_DISTRO}-rqt-common-plugins \
+    ros-${ROS_DISTRO}-gazebo-plugins \
+    ros-${ROS_DISTRO}-moveit \
+    ros-${ROS_DISTRO}-moveit-ros-visualization \
+    ros-${ROS_DISTRO}-geometry-msgs \
+    ros-${ROS_DISTRO}-cmake-modules \
+    ros-${ROS_DISTRO}-stereo-msgs \
+    ros-${ROS_DISTRO}-stereo-image-proc \
     libgtk2.0-dev \
     libglew-dev \
     openjdk-8-jdk \

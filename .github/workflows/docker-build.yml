@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        tag: ['18.04']
+        config:
+          - { ubuntu_version: 18.04, ros_distro: melodic }
+          - { ubuntu_version: 20.04, ros_distro: noetic }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -29,6 +31,6 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        build-args: BASE_DOCKER_IMAGE=ubuntu:${{ matrix.tag }}
+        build-args: BASE_DOCKER_IMAGE=ubuntu:${{ matrix.config.ubuntu_version }}, ROS_DISTRO=${{ matrix.config.ros_distro }}
         push: true
-        tags: 'oceanwaters/builder:ubuntu_${{ matrix.tag }}'
+        tags: oceanwaters/builder:ros-${{ matrix.config.ros_distro }}-desktop-full

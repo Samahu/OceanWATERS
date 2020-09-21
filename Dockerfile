@@ -1,9 +1,8 @@
 ARG BASE_DOCKER_IMAGE=ubuntu:18.04
-ARG ROS_DISTRO=melodic
 
 FROM $BASE_DOCKER_IMAGE
 
-ENV ROS_DISTRO=${ROS_DISTRO}
+ARG ROS_DISTRO=melodic
 
 RUN apt-get update && \
     apt-get install -y software-properties-common && \

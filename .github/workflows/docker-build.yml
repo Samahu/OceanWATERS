@@ -9,11 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.config.experimental }}
     strategy:
       matrix:
         config:
-          - { ubuntu_version: 18.04, ros_distro: melodic }
-          - { ubuntu_version: 20.04, ros_distro: noetic }
+          - { ubuntu_version: 18.04, ros_distro: melodic, experimental: false }
+          - { ubuntu_version: 20.04, ros_distro: noetic, experimental: true }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2

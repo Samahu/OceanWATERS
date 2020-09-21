@@ -1,4 +1,6 @@
-FROM ubuntu:18.04
+ARG BASE_DOCKER_IMAGE=ubuntu:18.04
+
+FROM $BASE_DOCKER_IMAGE
 
 RUN apt-get update && \
     apt-get install -y software-properties-common && \

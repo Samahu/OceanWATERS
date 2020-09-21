@@ -3,6 +3,8 @@ ARG ROS_DISTRO=melodic
 
 FROM $BASE_DOCKER_IMAGE
 
+ENV ROS_DISTRO=${ROS_DISTRO}
+
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:git-core/ppa -y && \

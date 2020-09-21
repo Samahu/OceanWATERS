@@ -13,8 +13,9 @@ jobs:
     strategy:
       matrix:
         config:
-          - { ubuntu_version: 18.04, ros_distro: melodic, experimental: false }
-          - { ubuntu_version: 20.04, ros_distro: noetic, experimental: true }
+          - { base_image: 'ubuntu:18.04', ros_distro: melodic, experimental: false }
+          - { base_image: 'nvidia/cuda:10.0-base-ubuntu18.04', ros_distro: melodic, experimental: true }
+          - { base_image: 'ubuntu:20.04', ros_distro: noetic, experimental: true }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -32,6 +33,6 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        build-args: BASE_DOCKER_IMAGE=ubuntu:${{ matrix.config.ubuntu_version }}, ROS_DISTRO=${{ matrix.config.ros_distro }}
+        build-args: BASE_DOCKER_IMAGE=${{ matrix.config.base_image }}, ROS_DISTRO=${{ matrix.config.ros_distro }}
         push: true
         tags: oceanwaters/builder:ros-${{ matrix.config.ros_distro }}-desktop-full

@@ -18,7 +18,6 @@ RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_relea
 
 RUN apt-get update \
     && apt-get install -y ros-${ROS_DISTRO}-desktop-full \
-    python-catkin-tools \
     ros-${ROS_DISTRO}-tf2-ros \
     ros-${ROS_DISTRO}-robot-state-publisher \
     ros-${ROS_DISTRO}-joint-state-publisher \
@@ -47,5 +46,12 @@ RUN apt-get update \
     libglew-dev \
     openjdk-8-jdk \
     ant \
-    gperf \
+    gperf
+
+# install the right build tool depending on ros distribution
+RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
+        apt-get install -y python-catkin-tools ; \
+    else \
+        apt-get install -y python3-colcon-common-extensions ; \
+    fi \
     && rm -rf /var/lib/apt/lists/*

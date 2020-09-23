@@ -3,6 +3,7 @@ ARG BASE_DOCKER_IMAGE=ubuntu:18.04
 FROM $BASE_DOCKER_IMAGE
 
 ARG ROS_DISTRO=melodic
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
@@ -14,8 +15,6 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc
 
 RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -sc) main" > /etc/apt/sources.list.d/gazebo-stable.list && \
     wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
-
-ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y ros-${ROS_DISTRO}-desktop-full \

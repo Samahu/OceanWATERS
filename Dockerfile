@@ -69,9 +69,9 @@ RUN ./build_plexil.sh && \
     fi
 
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $HOME/.bashrc && \
-    echo "ROS($ROS_DISTRO) sourced" >> $HOME/.bashrc && \
+    echo "echo 'ROS($ROS_DISTRO) sourced'" >> $HOME/.bashrc && \
     echo "export PLEXIL_HOME=/plexil" >> $HOME/.bashrc && \
-    echo "source $PLEXIL_HOME/scripts/plexil-setup.sh" >> $HOME/.bashrc
+    echo "source $PLEXIL_HOME/scripts/plexil-setup.sh" >> $HOME/.bashrc && \
+    echo "echo 'PLEXIL sourced'"
 
-ENTRYPOINT [ "source $HOME/.bashrc" ]
-CMD [ "bash" ]
+ENTRYPOINT [ "bash" ]

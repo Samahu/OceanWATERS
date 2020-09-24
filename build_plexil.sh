@@ -1,8 +1,8 @@
 #!/bin/bash
 
-git clone https://git.code.sf.net/p/plexil/git plexil
+git clone https://git.code.sf.net/p/plexil/git /plexil
 
-export PLEXIL_HOME=$(pwd)/plexil
+export PLEXIL_HOME=/plexil
 source $PLEXIL_HOME/scripts/plexil-setup.sh
 
 cd $PLEXIL_HOME

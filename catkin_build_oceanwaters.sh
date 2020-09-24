@@ -4,7 +4,7 @@
 source /opt/ros/melodic/setup.bash
 
 # source plexil again
-export PLEXIL_HOME=$(pwd)/plexil
+export PLEXIL_HOME=/plexil
 source $PLEXIL_HOME/scripts/plexil-setup.sh
 
 catkin init

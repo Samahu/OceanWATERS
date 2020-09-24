@@ -35,7 +35,7 @@ jobs:
         build-args: BASE_DOCKER_IMAGE=${{ matrix.config.base_image }}, ROS_DISTRO=${{ matrix.config.ros_distro }}
         push: true
         tags: oceanwaters/builder:ros-${{ matrix.config.ros_distro }}-desktop-full${{ matrix.config.gpu }}
-        target: OCEANWATERS_BUILDER
+        target: oceanwaters_builder
     - name: Build & Push OceanWATER Image
       uses: docker/build-push-action@v2
       with:
@@ -44,4 +44,4 @@ jobs:
         build-args: BASE_DOCKER_IMAGE=${{ matrix.config.base_image }}, ROS_DISTRO=${{ matrix.config.ros_distro }}
         push: true
         tags: oceanwaters/oceanwaters:ros-${{ matrix.config.ros_distro }}-desktop-full${{ matrix.config.gpu }}
-        target: OCEANWATERS_DOCKER
+        target: oceanwaters_docker

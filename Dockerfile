@@ -1,6 +1,6 @@
 ARG BASE_DOCKER_IMAGE=ubuntu:18.04
 
-FROM $BASE_DOCKER_IMAGE AS OCEANWATERS_BUILDER
+FROM $BASE_DOCKER_IMAGE AS oceanwaters_builder
 
 ARG ROS_DISTRO=melodic
 ARG DEBIAN_FRONTEND=noninteractive
@@ -56,7 +56,7 @@ RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
     fi \
     && rm -rf /var/lib/apt/lists/*
 
-FROM OCEANWATERS_BUILDER AS OCEANWATERS_DOCKER
+FROM oceanwaters_builder AS oceanwaters_docker
 COPY src /OceanWATERS/src/
 WORKDIR /OceanWATERS
 COPY *.sh .

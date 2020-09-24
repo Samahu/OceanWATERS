@@ -1,7 +1,4 @@
 name: Build OceanWATERS
-on:
-  push:
-    branches: [ master, melodic-devel ]
 
 jobs:
   build:

@@ -1,6 +1,6 @@
 ARG BASE_DOCKER_IMAGE=ubuntu:18.04
 
-FROM $BASE_DOCKER_IMAGE
+FROM $BASE_DOCKER_IMAGE AS OCEANWATER_BUILDER
 
 ARG ROS_DISTRO=melodic
 ARG DEBIAN_FRONTEND=noninteractive
@@ -55,3 +55,10 @@ RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
         apt-get install -y python3-colcon-common-extensions ; \
     fi \
     && rm -rf /var/lib/apt/lists/*
+
+FROM OCEANWATER_BUILDER AS OCEANWATER_DOCKER
+COPY src /OceanWATERS/src/
+WORKDIR /OceanWATERS
+COPY *.sh .
+RUN ./build_plexil.sh
+RUN ./build_oceanwaters.sh

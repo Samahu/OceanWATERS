@@ -3,9 +3,6 @@ name: Docker Image CI
 on:
   push:
     branches: [ master, melodic-devel ]
-  pull_request:
-    types: closed
-    branches: [ master, melodic-devel ]
 
 jobs:
   build:

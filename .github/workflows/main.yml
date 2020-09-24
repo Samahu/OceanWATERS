@@ -2,9 +2,6 @@ name: Build OceanWATERS
 on:
   push:
     branches: [ master, melodic-devel ]
-  pull_request:
-    types: closed
-    branches: [ master, melodic-devel ]
 
 jobs:
   build:

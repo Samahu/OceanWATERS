@@ -72,6 +72,8 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $HOME/.bashrc && \
     echo "echo 'ROS($ROS_DISTRO) sourced'" >> $HOME/.bashrc && \
     echo "export PLEXIL_HOME=/plexil" >> $HOME/.bashrc && \
     echo "source /plexil/scripts/plexil-setup.sh" >> $HOME/.bashrc && \
-    echo "echo 'PLEXIL sourced'"
+    echo "echo 'PLEXIL sourced'" && \
+    echo "source /OceanWATERS/devel/setup.bash" >> $HOME/.bashrc && \
+    echo "echo 'OceanWATERS sourced'"
 
 ENTRYPOINT [ "bash" ]

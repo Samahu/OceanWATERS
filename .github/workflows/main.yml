@@ -18,8 +18,8 @@ jobs:
       - run: ./catkin_build_oceanwaters.sh
       - uses: actions/upload-artifact@v2
         with:
-          name: build-logs-${{ github.run_id }}
-          path: logs
+          name: OceanWATERS-${{ github.run_id }}
+          path: *
 
   test:
     runs-on: [ubuntu-18.04]
@@ -30,3 +30,7 @@ jobs:
           submodules: true
       - run: ./build_plexil.sh
       - run: ./test_oceanwaters.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: test-logs-${{ github.run_id }}
+          path: build

@@ -1,6 +1,8 @@
-name: Docker Image CI
+name: OceanWATERS-Docker
 
 on:
+  schedule:
+    - cron:  '0 0 * * *'
   push:
     branches: [ master, melodic-devel ]
 
@@ -12,7 +14,7 @@ jobs:
       matrix:
         config:
           - { base_image: 'ubuntu:18.04', ros_distro: melodic, experimental: false, gpu: '' }
-          - { base_image: 'ubuntu:20.04', ros_distro: noetic, experimental: false, gpu: '' }
+          - { base_image: 'ubuntu:20.04', ros_distro: noetic, experimental: true, gpu: '' }
           - { base_image: 'nvidia/cuda:10.0-base-ubuntu18.04', ros_distro: melodic, experimental: false, gpu: -nvidia }
           - { base_image: 'rocm/dev-ubuntu-18.04', ros_distro: melodic, experimental: true, gpu: -amd }
     steps:

@@ -1,4 +1,10 @@
-name: Build OceanWATERS
+name: OceanWATERS
+
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+  push:
+    branches: [ master, melodic-devel ]
 
 jobs:
   build:
@@ -9,7 +15,11 @@ jobs:
         with:
           submodules: true
       - run: ./build_plexil.sh
-      - run: ./build_oceanwaters.sh
+      - run: ./catkin_build_oceanwaters.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-logs-${{ github.run_id }}
+          path: logs
 
   test:
     runs-on: [ubuntu-18.04]

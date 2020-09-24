@@ -16,10 +16,12 @@ jobs:
           submodules: true
       - run: ./build_plexil.sh
       - run: ./catkin_build_oceanwaters.sh
+      - name: 'Tar Workspace'
+        run: tar -cvf OceanWATERS-${{ github.run_id }}.tar --exclude=./OceanWATERS-${{ github.run_id }}.tar .
       - uses: actions/upload-artifact@v2
         with:
           name: OceanWATERS-${{ github.run_id }}
-          path: ./*
+          path: OceanWATERS-${{ github.run_id }}.tar
 
   test:
     runs-on: [ubuntu-18.04]

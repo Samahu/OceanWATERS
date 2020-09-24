@@ -18,6 +18,8 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: Setup QEMU
       uses: docker/setup-qemu-action@v1
     - name: Setup Docker BuildX

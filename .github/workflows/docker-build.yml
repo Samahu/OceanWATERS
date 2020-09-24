@@ -2,9 +2,10 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, melodic-devel ]
   pull_request:
-    branches: [ master ]
+    types: closed
+    branches: [ master, melodic-devel ]
 
 jobs:
   build:
@@ -14,8 +15,9 @@ jobs:
       matrix:
         config:
           - { base_image: 'ubuntu:18.04', ros_distro: melodic, experimental: false, gpu: '' }
-          - { base_image: 'nvidia/cuda:10.0-base-ubuntu18.04', ros_distro: melodic, experimental: true, gpu: -nvidia }
-          - { base_image: 'ubuntu:20.04', ros_distro: noetic, experimental: true, gpu: '' }
+          - { base_image: 'ubuntu:20.04', ros_distro: noetic, experimental: false, gpu: '' }
+          - { base_image: 'nvidia/cuda:10.0-base-ubuntu18.04', ros_distro: melodic, experimental: false, gpu: -nvidia }
+          - { base_image: 'rocm/dev-ubuntu-18.04', ros_distro: melodic, experimental: true, gpu: -amd }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2

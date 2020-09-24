@@ -17,7 +17,7 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc
 RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -sc) main" > /etc/apt/sources.list.d/gazebo-stable.list && \
     wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 
-RUN apt-get update && apt-get install -y && \
+RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-desktop-full \
     ros-${ROS_DISTRO}-tf2-ros \
     ros-${ROS_DISTRO}-robot-state-publisher \

@@ -19,7 +19,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: OceanWATERS-${{ github.run_id }}
-          path: *
+          path: ./*
 
   test:
     runs-on: [ubuntu-18.04]

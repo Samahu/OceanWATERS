@@ -2,7 +2,9 @@
 
 git clone https://git.code.sf.net/p/plexil/git /plexil
 # update to latest commit known to compile successfully
-git --git-dir /plexil/.git checkout 51813f1f6846d37b401bc088f0f5aeb5debb9841
+pushd /plexil
+git checkout 51813f1f6846d37b401bc088f0f5aeb5debb9841
+popd
 
 export PLEXIL_HOME=/plexil
 source $PLEXIL_HOME/scripts/plexil-setup.sh

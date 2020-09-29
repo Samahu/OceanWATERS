@@ -11,7 +11,7 @@ jobs:
         with:
           submodules: true
       - name: OceanWATERS Docker Action
-        uses: actions/OceanWATERS-Actions@v1
+        uses: Samahu/OceanWATERS-Actions@v1
         with:
           base-image: 'ubuntu:18.04'
           ros-distro: melodic

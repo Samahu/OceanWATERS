@@ -5,7 +5,7 @@ on:
   push:
     branches: [ master, melodic-devel ]
 jobs:
-  latest:
+  scan:
     runs-on: ubuntu-latest
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:

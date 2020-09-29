@@ -60,7 +60,7 @@ RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
 FROM oceanwaters_builder AS oceanwaters_docker
 COPY src /OceanWATERS/src/
 WORKDIR /OceanWATERS
-COPY *.sh .
+COPY *.sh ./
 RUN ./build_plexil.sh && \ 
     if [ "$ROS_DISTRO" = "melodic" ] ; then \
         ./catkin_build_oceanwaters.sh ; \

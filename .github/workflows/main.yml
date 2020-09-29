@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: [ubuntu-18.04]
+    runs-on: ubuntu-latest
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
           path: src
 
   test:
-    runs-on: [ubuntu-18.04]
+    runs-on: ubuntu-latest
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
       - uses: actions/checkout@v2

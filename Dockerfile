@@ -77,3 +77,4 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $HOME/.bashrc && \
     echo "echo 'OceanWATERS sourced'"
 
 ENTRYPOINT [ "bash" ]
+CMD ["roslaunch", "ow", "atacama_y1a.launch"]

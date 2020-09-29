@@ -2,7 +2,8 @@ name: OceanWATERS-coverity
 on:
   schedule:
     - cron: '0 */1 * * *'
-
+  push:
+    branches: [ master, melodic-devel ]
 jobs:
   latest:
     runs-on: ubuntu-latest

@@ -68,6 +68,8 @@ RUN ./build_plexil.sh && \
         ./colcon_build_oceanwaters.sh ; \
     fi
 
+#TODO: consider defining plexil as ENV
+ 
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $HOME/.bashrc && \
     echo "echo 'ROS($ROS_DISTRO) sourced'" >> $HOME/.bashrc && \
     echo "export PLEXIL_HOME=/plexil" >> $HOME/.bashrc && \
@@ -76,5 +78,5 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $HOME/.bashrc && \
     echo "source /OceanWATERS/devel/setup.bash" >> $HOME/.bashrc && \
     echo "echo 'OceanWATERS sourced'"
 
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
 CMD ["roslaunch", "ow", "atacama_y1a.launch"]

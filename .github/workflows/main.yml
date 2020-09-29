@@ -32,5 +32,5 @@ jobs:
       - run: ./test_oceanwaters.sh
       - uses: actions/upload-artifact@v2
         with:
-          name: test-logs-${{ github.run_id }}
+          name: OceanWATERS-${{ github.run_id }}-test-logs
           path: build

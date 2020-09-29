@@ -7,6 +7,7 @@ on:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    continue-on-error: true
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
       - uses: actions/checkout@v2
@@ -23,6 +24,10 @@ jobs:
         run: |
           export PATH=`pwd`/cov-analysis-linux64/bin:$PATH
           cov-build --dir cov-int ./catkin_build_oceanwaters.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: OceanWATERS-${{ github.run_id }}-coverity
+          path: cov-int
       - name: Submit the result to Coverity Scan
         run: |
           tar czvf oceanwaters.tgz cov-int

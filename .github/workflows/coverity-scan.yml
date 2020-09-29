@@ -1,0 +1,36 @@
+name: OceanWATERS-coverity
+on:
+  schedule:
+    - cron: '0 */1 * * *'
+
+jobs:
+  latest:
+    runs-on: ubuntu-latest
+    container: oceanwaters/builder:ros-melodic-desktop-full
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Download Coverity Build Tool
+        run: |
+          wget -q https://scan.coverity.com/download/cxx/linux64 --post-data "token=$TOKEN&Samahu%2FOceanWATERS" -O cov-analysis-linux64.tar.gz
+          mkdir cov-analysis-linux64
+          tar xzf cov-analysis-linux64.tar.gz --strip 1 -C cov-analysis-linux64
+        env:
+          TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+      - name: Build with cov-build
+        run: |
+          export PATH=`pwd`/cov-analysis-linux64/bin:$PATH
+          cov-build --dir cov-int ./catkin_build_oceanwaters.sh
+      - name: Submit the result to Coverity Scan
+        run: |
+          tar czvf oceanwaters.tgz cov-int
+          curl \
+            --form token=$TOKEN \
+            --form email=usa.naal@gmail.com \            
+            --form file=@oceanwaters.tgz \
+            --form version="TODO:Version" \
+            --form description="TODO:Description" \
+            https://scan.coverity.com/builds?project=Samahu%2FOceanWATERS
+        env:
+          TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}

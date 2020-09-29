@@ -1,6 +1,6 @@
 # OceanWATERS (unofficial) 
 [Overview](#overview) |
-[Code Organization](#code-Organization) |
+[Code Organization](#code-organization) |
 [Getting Started](#getting-started) |
 [License](#license)
 
@@ -14,8 +14,36 @@ worlds, such as Europa and Enceladus.
 | build       | [![build[master]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS/badge.svg?branch=master)](https://github.com/Samahu/OceanWATERS/actions?query=workflow%3AOceanWATERS) | [![build[melodic-devel]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS/badge.svg?branch=melodic-devel)](https://github.com/Samahu/OceanWATERS/actions?query=workflow%3AOceanWATERS) |
 | docker      | [![docker[master]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-Docker/badge.svg?branch=master)]((https://hub.docker.com/repository/docker/oceanwaters/oceanwaters)) | [![docker[melodic-devel]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-Docker/badge.svg?branch=melodic-devel)](https://hub.docker.com/repository/docker/oceanwaters/oceanwaters) |
 
+<a href="https://scan.coverity.com/projects/samahu-oceanwaters">
+  <img alt="Coverity Scan Build Status"
+       src="https://img.shields.io/coverity/scan/21872.svg"/>
+</a>
+
+## Code Organization
+
+This repository just adds build scripts and other miscellaneous files. OceanWATERS are associated with this repo as git submodules:
+- [irg_open](https://github.com/nasa/irg_open)
+- [ow_simulator](https://github.com/nasa/ow_simulator)
+- [ow_autonomy](https://github.com/nasa/ow_autonomy)
+- [ow_europa](https://github.com/nasa/ow_europa)
+
 ## Getting Started
 TODO
+
+### Running OceanWATERS docker images
+
+Launch OceanWATERS using the base docker image:
+```bash
+docker run -it oceanwaters/oceanwaters:ros-melodic-desktop-full
+```
+
+>Note: TODO Add steps to run the simulator
+
+To run using the base gpu accelerated docker (nvidia) use the following command:
+```bash
+docker run --gpus all -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
+```
+
 
 ## License
 OceanWATERS is open source software licensed under the

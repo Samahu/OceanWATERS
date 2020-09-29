@@ -14,12 +14,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - run: ./build_plexil.sh
-      - run: ./catkin_build_oceanwaters.sh
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2  # upload the artifact before build occurs to avoid uploading cspice data files
         with:
           name: OceanWATERS-${{ github.run_id }}
           path: src
+      - run: ./build_plexil.sh
+      - run: ./catkin_build_oceanwaters.sh
 
   test:
     runs-on: ubuntu-latest

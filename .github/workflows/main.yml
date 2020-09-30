@@ -18,8 +18,10 @@ jobs:
         with:
           name: OceanWATERS-${{ github.run_id }}
           path: src
-      - run: ./build_plexil.sh
-      - run: ./catkin_build_oceanwaters.sh
+      - name: Build PLEXIL
+        run: ./build_plexil.sh
+      - name: Build OceanWATERS
+        run: ./catkin_build_oceanwaters.sh
 
   test:
     runs-on: ubuntu-latest

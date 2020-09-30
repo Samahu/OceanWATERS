@@ -20,7 +20,9 @@ jobs:
           tar xzf cov-analysis-linux64.tar.gz --strip 1 -C cov-analysis-linux64
         env:
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
-      - name: Build with cov-build
+      - name: Build PLEXIL
+        run: ./build_plexil.sh
+      - name: Build OceanWATERS(coverity)
         run: |
           export PATH=`pwd`/cov-analysis-linux64/bin:$PATH
           cov-build --dir cov-int ./catkin_build_oceanwaters.sh

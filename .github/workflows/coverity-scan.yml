@@ -35,10 +35,10 @@ jobs:
           tar czvf oceanwaters.tgz cov-int
           curl \
             --form token=$TOKEN \
-            --form email=usa.naal@gmail.com \            
+            --form email=usa.naal@gmail.com \
             --form file=@oceanwaters.tgz \
-            --form version="TODO:Version" \
-            --form description="TODO:Description" \
+            --form version="TODO Version" \
+            --form description="TODO Description" \
             https://scan.coverity.com/builds?project=Samahu%2FOceanWATERS
         env:
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}

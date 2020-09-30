@@ -12,7 +12,7 @@ worlds, such as Europa and Enceladus.
 | OceanWATERS | master | melodic-devel |
 |:-----------:|:------:|:-------------:|
 | build       | [![build[master]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS/badge.svg?branch=master)](https://github.com/Samahu/OceanWATERS/actions?query=workflow%3AOceanWATERS) | [![build[melodic-devel]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS/badge.svg?branch=melodic-devel)](https://github.com/Samahu/OceanWATERS/actions?query=workflow%3AOceanWATERS) |
-| docker      | [![docker[master]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-Docker/badge.svg?branch=master)]((https://hub.docker.com/repository/docker/oceanwaters/oceanwaters)) | [![docker[melodic-devel]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-Docker/badge.svg?branch=melodic-devel)](https://hub.docker.com/repository/docker/oceanwaters/oceanwaters) |
+| docker      | [![docker[master]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-docker/badge.svg?branch=master)]((https://hub.docker.com/repository/docker/oceanwaters/oceanwaters)) | [![docker[melodic-devel]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-docker/badge.svg?branch=melodic-devel)](https://hub.docker.com/repository/docker/oceanwaters/oceanwaters) |
 
 <a href="https://scan.coverity.com/projects/samahu-oceanwaters">
   <img alt="Coverity Scan Build Status"
@@ -41,11 +41,17 @@ docker run -it oceanwaters/oceanwaters:ros-melodic-desktop-full
 
 To run using the base gpu accelerated docker (nvidia) use the following command:
 ```bash
-docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
+docker run -it --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
-    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
+    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia /bin/bash
 ```
 
+Once you connect to the docker container you may launch the simulation using:
+```bash
+roslaunch ow atacama_y1a.launch
+```
+
+>_Note: the ros environment has already been sourced as part of the build so you don't need to._
 
 ## License
 OceanWATERS is open source software licensed under the

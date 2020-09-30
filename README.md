@@ -41,7 +41,9 @@ docker run -it oceanwaters/oceanwaters:ros-melodic-desktop-full
 
 To run using the base gpu accelerated docker (nvidia) use the following command:
 ```bash
-docker run --gpus all -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
+docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
+    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
 ```
 
 

@@ -1,12 +1,16 @@
 [submodule "src/irg_open"]
 	path = src/irg_open
 	url = https://github.com/nasa/irg_open
+	branch = melodic-devel
 [submodule "src/ow_simulator"]
 	path = src/ow_simulator
 	url = https://github.com/nasa/ow_simulator
+	branch = melodic-devel
 [submodule "src/ow_europa"]
 	path = src/ow_europa
 	url = https://github.com/nasa/ow_europa
+	branch = melodic-devel
 [submodule "src/ow_autonomy"]
 	path = src/ow_autonomy
 	url = https://github.com/nasa/ow_autonomy
+	branch = melodic-devel

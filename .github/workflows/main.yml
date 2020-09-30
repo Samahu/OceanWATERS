@@ -1,23 +1,30 @@
-name: Build OceanWATERS
+name: OceanWATERS
+
 on:
+  schedule:
+    - cron:  '0 */1 * * *'
   push:
-  pull_request:
-    types: closed
-    branches:
-      - master
+    branches: [ master, melodic-devel ]
+
 jobs:
   build:
-    runs-on: [ubuntu-18.04]
+    runs-on: ubuntu-latest
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - run: ./build_plexil.sh
-      - run: ./build_oceanwaters.sh
+      - uses: actions/upload-artifact@v2  # upload the artifact before build occurs to avoid uploading cspice data files
+        with:
+          name: OceanWATERS-${{ github.run_id }}
+          path: src
+      - name: Build PLEXIL
+        run: ./build_plexil.sh
+      - name: Build OceanWATERS
+        run: ./catkin_build_oceanwaters.sh
 
   test:
-    runs-on: [ubuntu-18.04]
+    runs-on: ubuntu-latest
     container: oceanwaters/builder:ros-melodic-desktop-full
     steps:
       - uses: actions/checkout@v2
@@ -25,3 +32,7 @@ jobs:
           submodules: true
       - run: ./build_plexil.sh
       - run: ./test_oceanwaters.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: OceanWATERS-${{ github.run_id }}-test-logs
+          path: build

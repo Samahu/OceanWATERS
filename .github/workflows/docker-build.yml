@@ -1,10 +1,10 @@
 name: OceanWATERS-docker
 
-on:
-  schedule:
-    - cron:  '0 */1 * * *'
-  push:
-    branches: [ master, melodic-devel ]
+# on:
+#   schedule:
+#     - cron:  '0 */1 * * *'
+#   push:
+#     branches: [ master, melodic-devel ]
 
 jobs:
   build:

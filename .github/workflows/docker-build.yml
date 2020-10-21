@@ -36,7 +36,9 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        build-args: BASE_DOCKER_IMAGE=${{ matrix.config.base_image }}, ROS_DISTRO=${{ matrix.config.ros_distro }}
+        build-args: |
+          BASE_DOCKER_IMAGE=${{ matrix.config.base_image }}
+          ROS_DISTRO=${{ matrix.config.ros_distro }}
         push: true
         tags: oceanwaters/builder:ros-${{ matrix.config.ros_distro }}-desktop-full${{ matrix.config.gpu }}
         target: oceanwaters_builder

@@ -3,6 +3,7 @@ ARG BASE_DOCKER_IMAGE=ubuntu:18.04
 FROM $BASE_DOCKER_IMAGE AS oceanwaters_builder
 
 ARG ROS_DISTRO=melodic
+ARG ROS_DISTRO_POSTFIX=desktop-full
 ARG DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 
@@ -18,7 +19,7 @@ RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_relea
     wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 
 RUN apt-get update && apt-get install -y \
-    ros-${ROS_DISTRO}-desktop-full \
+    ros-${ROS_DISTRO}-${ROS_DISTRO_POSTFIX} \
     ros-${ROS_DISTRO}-tf2-ros \
     ros-${ROS_DISTRO}-robot-state-publisher \
     ros-${ROS_DISTRO}-joint-state-publisher \

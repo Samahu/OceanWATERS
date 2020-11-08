@@ -13,9 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: recursive
+          submodules: true
       - run: |
-          git status
+          git fetch
           git submodule foreach git status
           git submodule foreach git fetch
           git submodule foreach git checkout ${GITHUB_REF##*/}

@@ -15,7 +15,7 @@ jobs:
         with:
           submodules: true
       - run: |
-          git pull --recurse-submodules
+          git submodule foreach git checkout ${GITHUB_REF##*/}
           git submodule update --remote --merge
       - uses: actions/upload-artifact@v2  # upload the artifact before build occurs to avoid uploading cspice data files
         with:
@@ -34,7 +34,7 @@ jobs:
         with:
           submodules: true
       - run: |
-          git pull --recurse-submodules
+          git submodule foreach git checkout ${GITHUB_REF##*/}
           git submodule update --remote --merge
       - run: ./build_plexil.sh
       - run: ./test_oceanwaters.sh

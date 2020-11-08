@@ -23,7 +23,7 @@ jobs:
       with:
         submodules: true
     - run: |
-        git pull --recurse-submodules
+        git submodule foreach git checkout ${GITHUB_REF##*/}
         git submodule update --remote --merge
     - name: Setup QEMU
       uses: docker/setup-qemu-action@v1

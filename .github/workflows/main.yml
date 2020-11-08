@@ -14,10 +14,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+          fetch-depth: 0
       - run: |
-          git fetch --all
-
-          git submodule foreach git fetch --all
           git submodule foreach git status
           git submodule foreach git checkout ${GITHUB_REF##*/}
           git submodule update --remote --merge

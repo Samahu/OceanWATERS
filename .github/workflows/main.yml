@@ -15,6 +15,9 @@ jobs:
         with:
           submodules: true
       - run: |
+          git status
+          git submodule foreach git status
+          git submodule foreach git fetch
           git submodule foreach git checkout ${GITHUB_REF##*/}
           git submodule update --remote --merge
       - uses: actions/upload-artifact@v2  # upload the artifact before build occurs to avoid uploading cspice data files

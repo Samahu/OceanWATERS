@@ -14,6 +14,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - run: git submodule update --remote --merge
       - uses: actions/upload-artifact@v2  # upload the artifact before build occurs to avoid uploading cspice data files
         with:
           name: OceanWATERS-${{ github.run_id }}
@@ -30,6 +31,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - run: git submodule update --remote --merge
       - run: ./build_plexil.sh
       - run: ./test_oceanwaters.sh
       - uses: actions/upload-artifact@v2

@@ -12,7 +12,7 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    container: oceanwaters/builder:ros-melodic-ros-base
+    container: oceanwaters/builder:ros-melodic-desktop-full
     strategy:
       fail-fast: false
       matrix:

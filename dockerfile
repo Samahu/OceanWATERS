@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-joint-state-publisher \
     ros-${ROS_DISTRO}-joint-state-controller \
     ros-${ROS_DISTRO}-effort-controllers \
+    ros-${ROS_DISTRO}-joint-trajectory-controller \
     ros-${ROS_DISTRO}-dynamic-reconfigure \
     ros-${ROS_DISTRO}-nodelet \
     ros-${ROS_DISTRO}-nodelet-topic-tools \
@@ -54,30 +55,28 @@ RUN apt-get update && apt-get install -y \
 RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
         apt-get install -y python-catkin-tools ; \
     else \
-        apt-get install -y python3-colcon-common-extensions ; \
+        apt-get install -y python3-catkin-tools ; \
     fi \
     && rm -rf /var/lib/apt/lists/*
 
 FROM oceanwaters_builder AS oceanwaters_docker
 COPY src /OceanWATERS/src/
 WORKDIR /OceanWATERS
-COPY *.sh ./
-RUN ./build_plexil.sh && \ 
-    if [ "$ROS_DISTRO" = "melodic" ] ; then \
-        ./catkin_build_oceanwaters.sh ; \
-    else \
-        ./colcon_build_oceanwaters.sh ; \
-    fi
+COPY *.bash ./
+RUN ./build_plexil.bash && ./catkin_build_oceanwaters.bash
 
 #TODO: consider defining plexil as ENV
- 
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $HOME/.bashrc && \
-    echo "echo 'ROS($ROS_DISTRO) sourced'" >> $HOME/.bashrc && \
-    echo "export PLEXIL_HOME=/plexil" >> $HOME/.bashrc && \
-    echo "source /plexil/scripts/plexil-setup.sh" >> $HOME/.bashrc && \
-    echo "echo 'PLEXIL sourced'" >>  $HOME/.bashrc && \
-    echo "source /OceanWATERS/devel/setup.bash" >> $HOME/.bashrc && \
-    echo "echo 'OceanWATERS sourced'" >> $HOME/.bashrc
 
-ENTRYPOINT [ "/bin/bash", "/OceanWATERS/entrypoint.sh" ]
+RUN echo -e "\
+            #!/bin/bash \n \
+            source /opt/ros/$ROS_DISTRO/setup.bash \n \
+            source /usr/share/gazebo/setup.sh \n \
+            echo 'ROS($ROS_DISTRO) sourced' \n \
+            export PLEXIL_HOME=/plexil \n \
+            source /plexil/scripts/plexil-setup.sh \n \
+            echo 'PLEXIL sourced' \n \
+            source /OceanWATERS/devel/setup.bash \n \
+            echo 'OceanWATERS sourced'" > /OceanWATERS/startup.bash
+
+ENTRYPOINT [ "/bin/bash", "/OceanWATERS/entrypoint.bash" ]
 CMD [ "roslaunch", "ow", "atacama_y1a.launch" ]

@@ -23,9 +23,9 @@ jobs:
           name: OceanWATERS-${{ github.run_id }}
           path: src
       - name: Build PLEXIL
-        run: ./build_plexil.sh
+        run: ./build_plexil.bash
       - name: Build OceanWATERS
-        run: ./catkin_build_oceanwaters.sh
+        run: ./catkin_build_oceanwaters.bash
 
   test:
     runs-on: ubuntu-latest
@@ -38,8 +38,8 @@ jobs:
       - run: |
           git submodule foreach git checkout ${GITHUB_REF##*/}
           git submodule update --remote --merge
-      - run: ./build_plexil.sh
-      - run: ./test_oceanwaters.sh
+      - run: ./build_plexil.bash
+      - run: ./test_oceanwaters.bash
       - uses: actions/upload-artifact@v2
         with:
           name: OceanWATERS-${{ github.run_id }}-test-logs

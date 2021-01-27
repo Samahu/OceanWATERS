@@ -25,11 +25,11 @@ jobs:
         env:
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
       - name: Build PLEXIL
-        run: ./build_plexil.sh
+        run: ./build_plexil.bash
       - name: Build OceanWATERS(coverity)
         run: |
           export PATH=`pwd`/cov-analysis-linux64/bin:$PATH
-          cov-build --dir cov-int ./catkin_build_oceanwaters.sh
+          cov-build --dir cov-int ./catkin_build_oceanwaters.bash
       - uses: actions/upload-artifact@v2
         with:
           name: OceanWATERS-${{ github.run_id }}-coverity

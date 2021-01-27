@@ -1,6 +1,7 @@
 #!/bin/bash
 
 git clone https://git.code.sf.net/p/plexil/git /plexil
+git fetch --all
 git checkout tags/2020-11-17 -b branch-2020-11-17
 
 export PLEXIL_HOME=/plexil

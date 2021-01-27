@@ -1,9 +1,6 @@
 #!/bin/bash
 
 git clone https://git.code.sf.net/p/plexil/git /plexil
-pushd /plexil
-git checkout tags/2020-11-17
-popd
 
 export PLEXIL_HOME=/plexil
 source $PLEXIL_HOME/scripts/plexil-setup.sh

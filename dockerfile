@@ -63,7 +63,7 @@ FROM oceanwaters_builder AS oceanwaters_docker
 COPY src /OceanWATERS/src/
 WORKDIR /OceanWATERS
 COPY *.bash ./
-RUN ./build_plexil.bash && ./catkin_build_oceanwaters.bash
+RUN ./build_plexil.bash && ./build_oceanwaters.bash
 
 #TODO: consider defining plexil as ENV
 

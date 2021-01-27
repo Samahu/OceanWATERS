@@ -29,7 +29,7 @@ jobs:
       - name: Build OceanWATERS(coverity)
         run: |
           export PATH=`pwd`/cov-analysis-linux64/bin:$PATH
-          cov-build --dir cov-int ./catkin_build_oceanwaters.bash
+          cov-build --dir cov-int ./build_oceanwaters.bash
       - uses: actions/upload-artifact@v2
         with:
           name: OceanWATERS-${{ github.run_id }}-coverity

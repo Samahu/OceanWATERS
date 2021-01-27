@@ -25,7 +25,7 @@ jobs:
       - name: Build PLEXIL
         run: ./build_plexil.bash
       - name: Build OceanWATERS
-        run: ./catkin_build_oceanwaters.bash
+        run: ./build_oceanwaters.bash
 
   test:
     runs-on: ubuntu-latest

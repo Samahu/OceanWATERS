@@ -2,7 +2,7 @@
 
 git clone https://git.code.sf.net/p/plexil/git /plexil
 pushd /plexil
-git checkout tags/2020-11-17 -b branch-2020-11-17
+git checkout tags/2020-11-17
 popd
 
 export PLEXIL_HOME=/plexil

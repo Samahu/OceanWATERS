@@ -4,7 +4,6 @@ FROM $BASE_DOCKER_IMAGE AS oceanwaters_builder
 
 ARG ROS_DISTRO=melodic
 ARG ROS_DISTRO_POSTFIX=desktop-full
-ENV _ROS_DISTRO=$ROS_DISTRO
 ARG DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 
@@ -65,20 +64,23 @@ FROM oceanwaters_builder AS oceanwaters_docker
 COPY src /OceanWATERS/src/
 WORKDIR /OceanWATERS
 COPY *.bash ./
+RUN echo -e "\
+            #!/bin/bash \n \
+            source /opt/ros/$ROS_DISTRO/setup.bash \n \
+            source /usr/share/gazebo/setup.sh \n \
+            echo 'ROS($ROS_DISTRO) sourced'" > setup_ros.bash
 RUN ./build_plexil.bash && ./build_oceanwaters.bash
 
 #TODO: consider defining plexil as ENV
 
 RUN echo -e "\
             #!/bin/bash \n \
-            source /opt/ros/$ROS_DISTRO/setup.bash \n \
-            source /usr/share/gazebo/setup.sh \n \
-            echo 'ROS($ROS_DISTRO) sourced' \n \
+            source /OceanWATERS/setup_ros.bash \n \
             export PLEXIL_HOME=/plexil \n \
             source /plexil/scripts/plexil-setup.sh \n \
             echo 'PLEXIL sourced' \n \
             source /OceanWATERS/devel/setup.bash \n \
-            echo 'OceanWATERS sourced'" > /OceanWATERS/startup.bash
+            echo 'OceanWATERS sourced'" > startup.bash
 
 ENTRYPOINT [ "/bin/bash", "/OceanWATERS/entrypoint.bash" ]
 CMD [ "roslaunch", "ow", "atacama_y1a.launch" ]

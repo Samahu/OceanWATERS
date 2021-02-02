@@ -4,6 +4,7 @@ FROM $BASE_DOCKER_IMAGE AS oceanwaters_builder
 
 ARG ROS_DISTRO=melodic
 ARG ROS_DISTRO_POSTFIX=desktop-full
+ENV _ROS_DISTRO=$ROS_DISTRO
 ARG DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 
@@ -55,7 +56,8 @@ RUN apt-get update && apt-get install -y \
 RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
         apt-get install -y python-catkin-tools ; \
     else \
-        apt-get install -y python3-catkin-tools ; \
+        apt-get install -y python3-catkin-tools python3-pip ; \
+        pip3 install osrf-pycommon ; \
     fi \
     && rm -rf /var/lib/apt/lists/*
 

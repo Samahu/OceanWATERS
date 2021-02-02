@@ -60,16 +60,17 @@ RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
     fi \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir /OceanWATERS && \
+    echo -e "\
+            #!/bin/bash \n \
+            source /opt/ros/$ROS_DISTRO/setup.bash \n \
+            source /usr/share/gazebo/setup.sh \n \
+            echo 'ROS($ROS_DISTRO) sourced'" > /OceanWATERS/setup_ros.bash
+
 FROM oceanwaters_builder AS oceanwaters_docker
 COPY src /OceanWATERS/src/
 WORKDIR /OceanWATERS
 COPY *.bash ./
-
-RUN echo -e "\
-            #!/bin/bash \n \
-            source /opt/ros/$ROS_DISTRO/setup.bash \n \
-            source /usr/share/gazebo/setup.sh \n \
-            echo 'ROS($ROS_DISTRO) sourced'" > setup_ros.bash
 
 RUN ./build_plexil.bash
 

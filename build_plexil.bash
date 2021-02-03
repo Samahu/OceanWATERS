@@ -1,5 +1,5 @@
 #!/bin/bash
-
+git config --global http.postBuffer 1048576000
 git clone --depth 1 https://git.code.sf.net/p/plexil/git /plexil
 
 export PLEXIL_HOME=/plexil

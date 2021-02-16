@@ -62,10 +62,10 @@ RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
 
 RUN mkdir /OceanWATERS && \
     echo -e "\
-            #!/bin/bash \n \
-            source /opt/ros/$ROS_DISTRO/setup.bash \n \
-            source /usr/share/gazebo/setup.sh \n \
-            echo 'ROS($ROS_DISTRO) sourced'" > /OceanWATERS/setup_ros.bash
+#!/bin/bash \n \
+source /opt/ros/$ROS_DISTRO/setup.bash \n \
+source /usr/share/gazebo/setup.sh \n \
+echo 'ROS($ROS_DISTRO) sourced'" > /OceanWATERS/setup_ros.bash
 
 FROM oceanwaters_builder AS oceanwaters_docker
 COPY src /OceanWATERS/src/
@@ -77,13 +77,13 @@ RUN ./build_plexil.bash
 RUN ./build_oceanwaters.bash
 
 RUN echo -e "\
-            #!/bin/bash \n \
-            source /OceanWATERS/setup_ros.bash \n \
-            export PLEXIL_HOME=/plexil \n \
-            source /plexil/scripts/plexil-setup.sh \n \
-            echo 'PLEXIL sourced' \n \
-            source /OceanWATERS/devel/setup.bash \n \
-            echo 'OceanWATERS sourced'" > startup.bash
+#!/bin/bash \n \
+source /OceanWATERS/setup_ros.bash \n \
+export PLEXIL_HOME=/plexil \n \
+source /plexil/scripts/plexil-setup.sh \n \
+echo 'PLEXIL sourced' \n \
+source /OceanWATERS/devel/setup.bash \n \
+echo 'OceanWATERS sourced'" > startup.bash
 
 ENTRYPOINT [ "/bin/bash", "/OceanWATERS/entrypoint.bash" ]
 CMD [ "roslaunch", "ow", "atacama_y1a.launch" ]

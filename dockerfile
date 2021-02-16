@@ -47,7 +47,7 @@ RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-stereo-image-proc \
     libgtk2.0-dev \
     libglew-dev \
-    openjdk-8-jdk \
+    default-jre \
     ant \
     gperf
 

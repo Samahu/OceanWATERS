@@ -8,5 +8,5 @@ export PLEXIL_HOME=/plexil
 source $PLEXIL_HOME/scripts/plexil-setup.sh
 
 catkin init
-catkin config --blacklist ow_autonomy
+catkin config
 catkin build --cmake-args -Wno-dev

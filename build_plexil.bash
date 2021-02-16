@@ -10,4 +10,4 @@ make src/configure
 cd src
 ./configure CFLAGS="-g -O2" CXXFLAGS="-g -O2" --prefix=$PLEXIL_HOME --disable-static --disable-viewer --enable-ipc
 cd $PLEXIL_HOME
-make tools
+make universalExec plexil-compiler checkpoint

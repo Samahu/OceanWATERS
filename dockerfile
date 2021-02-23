@@ -3,6 +3,7 @@ ARG BASE_DOCKER_IMAGE=ubuntu:18.04
 FROM $BASE_DOCKER_IMAGE AS oceanwaters_builder
 
 ARG ROS_DISTRO=melodic
+ARG ROS_DISTRO_POSTFIX=desktop-full
 ARG DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 
@@ -18,12 +19,13 @@ RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_relea
     wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 
 RUN apt-get update && apt-get install -y \
-    ros-${ROS_DISTRO}-desktop-full \
+    ros-${ROS_DISTRO}-${ROS_DISTRO_POSTFIX} \
     ros-${ROS_DISTRO}-tf2-ros \
     ros-${ROS_DISTRO}-robot-state-publisher \
     ros-${ROS_DISTRO}-joint-state-publisher \
     ros-${ROS_DISTRO}-joint-state-controller \
     ros-${ROS_DISTRO}-effort-controllers \
+    ros-${ROS_DISTRO}-joint-trajectory-controller \
     ros-${ROS_DISTRO}-dynamic-reconfigure \
     ros-${ROS_DISTRO}-nodelet \
     ros-${ROS_DISTRO}-nodelet-topic-tools \
@@ -45,7 +47,7 @@ RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-stereo-image-proc \
     libgtk2.0-dev \
     libglew-dev \
-    openjdk-8-jdk \
+    default-jre \
     ant \
     gperf
 
@@ -53,30 +55,35 @@ RUN apt-get update && apt-get install -y \
 RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
         apt-get install -y python-catkin-tools ; \
     else \
-        apt-get install -y python3-colcon-common-extensions ; \
+        apt-get install -y python3-catkin-tools python3-pip ; \
+        pip3 install osrf-pycommon ; \
     fi \
     && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir /OceanWATERS && \
+    echo -e "\
+#!/bin/bash \n \
+source /opt/ros/$ROS_DISTRO/setup.bash \n \
+source /usr/share/gazebo/setup.sh \n \
+echo 'ROS($ROS_DISTRO) sourced'" > /OceanWATERS/setup_ros.bash
 
 FROM oceanwaters_builder AS oceanwaters_docker
 COPY src /OceanWATERS/src/
 WORKDIR /OceanWATERS
-COPY *.sh ./
-RUN ./build_plexil.sh && \ 
-    if [ "$ROS_DISTRO" = "melodic" ] ; then \
-        ./catkin_build_oceanwaters.sh ; \
-    else \
-        ./colcon_build_oceanwaters.sh ; \
-    fi
+COPY *.bash ./
 
-#TODO: consider defining plexil as ENV
- 
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $HOME/.bashrc && \
-    echo "echo 'ROS($ROS_DISTRO) sourced'" >> $HOME/.bashrc && \
-    echo "export PLEXIL_HOME=/plexil" >> $HOME/.bashrc && \
-    echo "source /plexil/scripts/plexil-setup.sh" >> $HOME/.bashrc && \
-    echo "echo 'PLEXIL sourced'" >>  $HOME/.bashrc && \
-    echo "source /OceanWATERS/devel/setup.bash" >> $HOME/.bashrc && \
-    echo "echo 'OceanWATERS sourced'" >> $HOME/.bashrc
+RUN ./build_plexil.bash
 
-ENTRYPOINT [ "/bin/bash", "entrypoint.sh" ]
-CMD ["roslaunch", "ow", "atacama_y1a.launch"]
+RUN ./build_oceanwaters.bash
+
+RUN echo -e "\
+#!/bin/bash \n \
+source /OceanWATERS/setup_ros.bash \n \
+export PLEXIL_HOME=/plexil \n \
+source /plexil/scripts/plexil-setup.sh \n \
+echo 'PLEXIL sourced' \n \
+source /OceanWATERS/devel/setup.bash \n \
+echo 'OceanWATERS sourced'" > startup.bash
+
+ENTRYPOINT [ "/bin/bash", "/OceanWATERS/entrypoint.bash" ]
+CMD [ "roslaunch", "ow", "atacama_y1a.launch" ]

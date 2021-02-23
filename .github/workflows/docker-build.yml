@@ -4,7 +4,7 @@ on:
   schedule:
     - cron:  '0 16 * * *'
   push:
-    branches: [ master ]
+    branches: [ master, melodic-devel ]
 
 jobs:
   build:
@@ -13,15 +13,20 @@ jobs:
     strategy:
       matrix:
         config:
-          - { base_image: 'ubuntu:18.04', ros_distro: melodic, experimental: false, gpu: '' }
-          - { base_image: 'ubuntu:20.04', ros_distro: noetic, experimental: true, gpu: '' }
-          - { base_image: 'nvidia/cuda:10.0-base-ubuntu18.04', ros_distro: melodic, experimental: false, gpu: -nvidia }
-          - { base_image: 'rocm/dev-ubuntu-18.04', ros_distro: melodic, experimental: true, gpu: -amd }
+          - { base_image: 'ubuntu:18.04', ros_distro: melodic, ros_distro_postfix: 'desktop-full', experimental: false, gpu: '' }
+          - { base_image: 'ubuntu:20.04', ros_distro: noetic, ros_distro_postfix: 'desktop-full', experimental: true, gpu: '' }
+          - { base_image: 'nvidia/cuda:10.0-base-ubuntu18.04', ros_distro: melodic, ros_distro_postfix: 'desktop-full', experimental: false, gpu: -nvidia }
+          - { base_image: 'nvidia/cuda:11.0-base-ubuntu20.04', ros_distro: noetic, ros_distro_postfix: 'desktop-full', experimental: false, gpu: -nvidia }
+          # - { base_image: 'rocm/dev-ubuntu-18.04', ros_distro: melodic, ros_distro_postfix: 'desktop-full', experimental: true, gpu: -amd }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
       with:
         submodules: true
+        fetch-depth: 0
+    - run: |
+        git submodule foreach git checkout ${GITHUB_REF##*/}
+        git submodule update --remote --merge
     - name: Setup QEMU
       uses: docker/setup-qemu-action@v1
     - name: Setup Docker BuildX
@@ -35,21 +40,23 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: ./Dockerfile
+        file: ./dockerfile
         build-args: |
           BASE_DOCKER_IMAGE=${{ matrix.config.base_image }}
           ROS_DISTRO=${{ matrix.config.ros_distro }}
+          ROS_DISTRO_POSTFIX=${{ matrix.config.ros_distro_postfix }}
         push: true
-        tags: oceanwaters/builder:ros-${{ matrix.config.ros_distro }}-desktop-full${{ matrix.config.gpu }}
+        tags: oceanwaters/builder:ros-${{ matrix.config.ros_distro }}-${{ matrix.config.ros_distro_postfix }}${{ matrix.config.gpu }}
         target: oceanwaters_builder
     - name: Build & Push OceanWATER Image
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: ./Dockerfile
+        file: ./dockerfile
         build-args: |
           BASE_DOCKER_IMAGE=${{ matrix.config.base_image }}
           ROS_DISTRO=${{ matrix.config.ros_distro }}
+          ROS_DISTRO_POSTFIX=${{ matrix.config.ros_distro_postfix }}
         push: true
-        tags: oceanwaters/oceanwaters:ros-${{ matrix.config.ros_distro }}-desktop-full${{ matrix.config.gpu }}
+        tags: oceanwaters/oceanwaters:ros-${{ matrix.config.ros_distro }}-${{ matrix.config.ros_distro_postfix }}${{ matrix.config.gpu }}
         target: oceanwaters_docker

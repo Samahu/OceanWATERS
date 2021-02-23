@@ -13,6 +13,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+          fetch-depth: 0
+      - run: |
+          git submodule foreach git checkout ${GITHUB_REF##*/}
+          git submodule update --remote --merge
       - name: Download Coverity Build Tool
         run: |
           wget -q https://scan.coverity.com/download/linux64 --post-data "token=$TOKEN&project=Samahu%2FOceanWATERS" -O cov-analysis-linux64.tar.gz
@@ -21,11 +25,11 @@ jobs:
         env:
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
       - name: Build PLEXIL
-        run: ./build_plexil.sh
+        run: ./build_plexil.bash
       - name: Build OceanWATERS(coverity)
         run: |
           export PATH=`pwd`/cov-analysis-linux64/bin:$PATH
-          cov-build --dir cov-int ./catkin_build_oceanwaters.sh
+          cov-build --dir cov-int ./build_oceanwaters.bash
       - uses: actions/upload-artifact@v2
         with:
           name: OceanWATERS-${{ github.run_id }}-coverity

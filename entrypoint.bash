@@ -2,5 +2,6 @@
 set -e
 
 # setup ros/oceanwaters environment
-. $HOME/.bashrc
+source /OceanWATERS/startup.bash
+
 exec "$@"

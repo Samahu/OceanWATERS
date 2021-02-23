@@ -2,9 +2,9 @@ name: OceanWATERS-docker
 
 on:
   schedule:
-    - cron:  '0 6 * * *'
+    - cron:  '0 16 * * *'
   push:
-    branches: [ melodic-devel ]
+    branches: [ master, melodic-devel ]
 
 jobs:
   build:
@@ -50,6 +50,8 @@ jobs:
         target: oceanwaters_builder
     - name: Build & Push OceanWATER Image
       uses: docker/build-push-action@v2
+      env:
+        DOCKER_REPO: "${{ github.ref == 'refs/heads/master' && 'oceanwaters' || 'nightly' }}"
       with:
         context: .
         file: ./dockerfile
@@ -58,5 +60,5 @@ jobs:
           ROS_DISTRO=${{ matrix.config.ros_distro }}
           ROS_DISTRO_POSTFIX=${{ matrix.config.ros_distro_postfix }}
         push: true
-        tags: oceanwaters/oceanwaters:ros-${{ matrix.config.ros_distro }}-${{ matrix.config.ros_distro_postfix }}${{ matrix.config.gpu }}
+        tags: oceanwaters/$DOCKER_REPO:ros-${{ matrix.config.ros_distro }}-${{ matrix.config.ros_distro_postfix }}${{ matrix.config.gpu }}
         target: oceanwaters_docker

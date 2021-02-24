@@ -15,8 +15,8 @@ jobs:
         config:
           - { base_image: 'ubuntu:18.04', ros_distro: melodic, ros_distro_postfix: 'desktop-full', experimental: false, gpu: '' }
           - { base_image: 'ubuntu:20.04', ros_distro: noetic, ros_distro_postfix: 'desktop-full', experimental: true, gpu: '' }
-          - { base_image: 'nvidia/cuda:10.0-base-ubuntu18.04', ros_distro: melodic, ros_distro_postfix: 'desktop-full', experimental: false, gpu: -nvidia }
-          - { base_image: 'nvidia/cuda:11.0-base-ubuntu20.04', ros_distro: noetic, ros_distro_postfix: 'desktop-full', experimental: false, gpu: -nvidia }
+          - { base_image: 'nvidia/cudagl:11.2.1-base-ubuntu18.04', ros_distro: melodic, ros_distro_postfix: 'desktop-full', experimental: false, gpu: -nvidia }
+          - { base_image: 'nvidia/cudagl:11.2.0-base-ubuntu20.04', ros_distro: noetic, ros_distro_postfix: 'desktop-full', experimental: true, gpu: -nvidia }
           # - { base_image: 'rocm/dev-ubuntu-18.04', ros_distro: melodic, ros_distro_postfix: 'desktop-full', experimental: true, gpu: -amd }
     steps:
     - name: Checkout Code

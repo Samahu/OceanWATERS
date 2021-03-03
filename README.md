@@ -32,26 +32,26 @@ TODO
 
 ### Running OceanWATERS docker images
 
-Launch OceanWATERS using the base docker image:
+* Launch OceanWATERS with graphical interfaces usingthe the nvidia docker image:
 ```bash
-docker run -it oceanwaters/oceanwaters:ros-melodic-desktop-full
+docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
+    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
 ```
+This will start the simulation immediately using default configuration.
 
->Note: TODO Add steps to run the simulator
-
-To run using the base gpu accelerated docker (nvidia) use the following command:
+* You can also start in terminal mode first:
 ```bash
 docker run -it --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
     oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia /bin/bash
 ```
-
-Once you connect to the docker container you may launch the simulation using:
+then once you connect to the docker container you may launch the simulation using:
 ```bash
-roslaunch ow atacama_y1a.launch
+roslaunch ow atacama_y1a.launch # or you may use europa_terminator_workspace.launch
 ```
 
->_Note: the ros environment has already been sourced as part of the build so you don't need to._
+>_Note: the ros environment has already been sourced as part of starting the container so you don't need to._
 
 ## License
 OceanWATERS is open source software licensed under the

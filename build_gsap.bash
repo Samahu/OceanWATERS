@@ -7,7 +7,7 @@ git clone --depth 1 --branch v2.0.0 https://github.com/nasa/GSAP.git /gsap
 
 export GSAP_HOME=/gsap
 
-mkdir -p $PLEXIL_HOME/build
-cd $PLEXIL_HOME/build
+mkdir -p $GSAP_HOME/build
+cd $GSAP_HOME/build
 cmake ..
 make

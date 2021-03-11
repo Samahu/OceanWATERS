@@ -73,7 +73,7 @@ WORKDIR /OceanWATERS
 COPY *.bash ./
 
 RUN ./build_plexil.bash
-
+RUN ./build_gsap.bash
 RUN ./build_oceanwaters.bash
 
 RUN echo -e "\
@@ -82,6 +82,7 @@ source /OceanWATERS/setup_ros.bash \n \
 export PLEXIL_HOME=/plexil \n \
 source /plexil/scripts/plexil-setup.sh \n \
 echo 'PLEXIL sourced' \n \
+export GSAP_HOME=/gsap \n \
 source /OceanWATERS/devel/setup.bash \n \
 echo 'OceanWATERS sourced'" > startup.bash
 

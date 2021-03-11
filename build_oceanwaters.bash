@@ -6,6 +6,7 @@ source /OceanWATERS/setup_ros.bash
 # source plexil again
 export PLEXIL_HOME=/plexil
 source $PLEXIL_HOME/scripts/plexil-setup.sh
+export GSAP_HOME=/gsap
 
 catkin init
 catkin config

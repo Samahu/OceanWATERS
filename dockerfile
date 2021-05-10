@@ -60,29 +60,32 @@ RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
     fi \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /OceanWATERS && \
-    echo -e "\
-#!/bin/bash \n \
-source /opt/ros/$ROS_DISTRO/setup.bash \n \
-source /usr/share/gazebo/setup.sh \n \
-echo 'ROS($ROS_DISTRO) sourced'" > /OceanWATERS/setup_ros.bash
-
-FROM oceanwaters_builder AS oceanwaters_docker
-COPY src /OceanWATERS/src/
-WORKDIR /OceanWATERS
-COPY *.bash ./
-
-RUN ./build_plexil.bash
-RUN ./build_gsap.bash
-RUN ./build_oceanwaters.bash
+RUN mkdir /ow_env
+COPY *.bash /ow_env
+RUN /ow_env/build_plexil.bash
+RUN /ow_env/build_gsap.bash
 
 RUN echo -e "\
 #!/bin/bash \n \
-source /OceanWATERS/setup_ros.bash \n \
+source /opt/ros/$ROS_DISTRO/setup.bash \n \
+source /usr/share/gazebo/setup.sh \n \
+echo 'ROS($ROS_DISTRO) sourced \n \
 export PLEXIL_HOME=/plexil \n \
 source /plexil/scripts/plexil-setup.sh \n \
 echo 'PLEXIL sourced' \n \
-export GSAP_HOME=/gsap \n \
+export GSAP_HOME=/gsap \n" > /ow_env/setup.bash
+
+ENTRYPOINT [ "/bin/bash", "/ow_env/setup.bash" ]
+
+FROM oceanwaters_builder AS oceanwaters_docker
+RUN mkdir /OceanWATERS
+WORKDIR /OceanWATERS
+COPY src /OceanWATERS/src/
+RUN /ow_env/build_oceanwaters.bash
+
+RUN echo -e "\
+#!/bin/bash \n \
+source /ow_env/setup.bash \n \
 source /OceanWATERS/devel/setup.bash \n \
 echo 'OceanWATERS sourced'" > startup.bash
 

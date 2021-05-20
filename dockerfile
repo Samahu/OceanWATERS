@@ -75,7 +75,13 @@ source /plexil/scripts/plexil-setup.sh \n \
 echo 'PLEXIL sourced' \n \
 export GSAP_HOME=/gsap \n" > /ow_env/setup.bash
 
-ENTRYPOINT [ "/bin/bash", "/ow_env/setup.bash" ]
+RUN echo -e "\
+#!/bin/bash \n \
+set -e \n \
+source /ow_env/setup.bash \
+exec '$@'" > /ow_env/startup.bash
+
+ENTRYPOINT [ "/bin/bash", "/ow_env/startup.bash" ]
 
 FROM oceanwaters_builder AS oceanwaters_docker
 RUN mkdir /OceanWATERS

@@ -69,7 +69,7 @@ RUN echo -e "\
 #!/bin/bash \n \
 source /opt/ros/$ROS_DISTRO/setup.bash \n \
 source /usr/share/gazebo/setup.sh \n \
-echo 'ROS($ROS_DISTRO) sourced \n \
+echo 'ROS($ROS_DISTRO) sourced' \n \
 export PLEXIL_HOME=/plexil \n \
 source /plexil/scripts/plexil-setup.sh \n \
 echo 'PLEXIL sourced' \n \

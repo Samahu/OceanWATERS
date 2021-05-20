@@ -38,6 +38,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build & Push OceanWATER Builder
       uses: docker/build-push-action@v2
+      env:
+        DOCKER_REPO: "${{ github.ref == 'refs/heads/master' && 'builder' || 'builder_nightly' }}"
       with:
         context: .
         file: ./dockerfile
@@ -46,7 +48,7 @@ jobs:
           ROS_DISTRO=${{ matrix.config.ros_distro }}
           ROS_DISTRO_POSTFIX=${{ matrix.config.ros_distro_postfix }}
         push: true
-        tags: oceanwaters/builder:ros-${{ matrix.config.ros_distro }}-${{ matrix.config.ros_distro_postfix }}${{ matrix.config.gpu }}
+        tags: oceanwaters/${{ env.DOCKER_REPO }}:ros-${{ matrix.config.ros_distro }}-${{ matrix.config.ros_distro_postfix }}${{ matrix.config.gpu }}
         target: oceanwaters_builder
     - name: Build & Push OceanWATER Image
       uses: docker/build-push-action@v2

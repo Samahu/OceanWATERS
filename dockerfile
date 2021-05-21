@@ -65,8 +65,7 @@ COPY *.bash /ow_env
 RUN /ow_env/build_plexil.bash
 RUN /ow_env/build_gsap.bash
 
-RUN echo -e "\
-#!/bin/bash \n \
+RUN echo -e "#!/bin/bash \n \
 source /opt/ros/$ROS_DISTRO/setup.bash \n \
 source /usr/share/gazebo/setup.sh \n \
 echo 'ROS($ROS_DISTRO) sourced' \n \
@@ -75,8 +74,7 @@ source /plexil/scripts/plexil-setup.sh \n \
 echo 'PLEXIL sourced' \n \
 export GSAP_HOME=/gsap \n" > /ow_env/setup.bash
 
-RUN echo -e "\
-#!/bin/bash \n \
+RUN echo -e "#!/bin/bash \n \
 set -e \n \
 source /ow_env/setup.bash \n \
 exec '$@' \n" > /ow_env/startup.bash
@@ -89,8 +87,7 @@ WORKDIR /OceanWATERS
 COPY src /OceanWATERS/src/
 RUN /ow_env/build_oceanwaters.bash
 
-RUN echo -e "\
-#!/bin/bash \n \
+RUN echo -e "#!/bin/bash \n \
 source /ow_env/setup.bash \n \
 source /OceanWATERS/devel/setup.bash \n \
 echo 'OceanWATERS sourced'" > startup.bash

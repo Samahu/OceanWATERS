@@ -78,8 +78,8 @@ export GSAP_HOME=/gsap \n" > /ow_env/setup.bash
 RUN echo -e "\
 #!/bin/bash \n \
 set -e \n \
-source /ow_env/setup.bash \
-exec '$@'" > /ow_env/startup.bash
+source /ow_env/setup.bash \n \
+exec '$@' \n" > /ow_env/startup.bash
 
 ENTRYPOINT [ "/bin/bash", "/ow_env/startup.bash" ]
 

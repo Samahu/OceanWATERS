@@ -22,6 +22,8 @@ jobs:
         with:
           name: OceanWATERS-${{ github.run_id }}
           path: src
+      - name: Build GSAP
+        run: ./build_gsap.bash
       - name: Build PLEXIL
         run: ./build_plexil.bash
       - name: Build OceanWATERS
@@ -38,6 +40,7 @@ jobs:
       - run: |
           git submodule foreach git checkout ${GITHUB_REF##*/}
           git submodule update --remote --merge
+      - run: ./build_gsap.bash
       - run: ./build_plexil.bash
       - run: ./test_oceanwaters.bash
       - uses: actions/upload-artifact@v2

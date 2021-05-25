@@ -1,6 +1,6 @@
 #!/bin/bash
 git config --global http.postBuffer 1048576000
-git clone --depth 1 https://git.code.sf.net/p/plexil/git /plexil
+git clone --depth 1 --branch releases/plexil-4 https://git.code.sf.net/p/plexil/git /plexil
 
 export PLEXIL_HOME=/plexil
 source $PLEXIL_HOME/scripts/plexil-setup.sh

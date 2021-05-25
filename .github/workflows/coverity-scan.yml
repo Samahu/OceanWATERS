@@ -24,6 +24,8 @@ jobs:
           tar xzf cov-analysis-linux64.tar.gz --strip 1 -C cov-analysis-linux64
         env:
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+      - name: Build GSAP
+        run: ./build_gsap.bash
       - name: Build PLEXIL
         run: ./build_plexil.bash
       - name: Build OceanWATERS(coverity)

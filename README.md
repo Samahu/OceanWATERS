@@ -28,19 +28,17 @@ This repository just adds build scripts and other miscellaneous files. OceanWATE
 - [ow_europa](https://github.com/nasa/ow_europa)
 
 ## Getting Started
-TODO
 
-### Running OceanWATERS docker images
+* If you are merely interested in running the simulation you can do so by running one of the fully baked OceanWATERS docker images:
+  - stable channel: `oceanwaters/oceanwaters`         
+  - development channel: `oceanwaters/oceanwaters_nightly` 
+* If you are interested in doing development on the docker image you can use the builder images:
+  - stable channel: `oceanwaters/builder`
+  - development channel: `oceanwaters/builder_nightly`
 
-* Launch OceanWATERS with graphical interfaces usingthe the nvidia docker image:
-```bash
-docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
-    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
-```
-This will start the simulation immediately using default configuration.
+### Running the fully baked OceanWATERS docker images
 
-* You can also start in terminal mode first:
+To run using the base gpu accelerated docker (nvidia) use the following command:
 ```bash
 docker run -it --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
@@ -50,8 +48,33 @@ then once you connect to the docker container you may launch the simulation usin
 ```bash
 roslaunch ow atacama_y1a.launch # or you may use europa_terminator_workspace.launch
 ```
+By default this would automatically launch the simulation, you can override the default behaviour by specifying the command
+to be run as follows:
 
->_Note: the ros environment has already been sourced as part of starting the container so you don't need to._
+```bash
+docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
+    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia /bin/bash
+```
+
+### Running the base OceanWATERS docker image for development
+
+
+The development image doesn't contain the code baked into it, but it has all the required dependencies to build and run
+the project. So assuming that the oceanwaters workspace is located at `~/oceanwaters_ws` then you can mount the folder into
+the docker container as follows:
+
+```bash
+docker run -it --gpus all -v ~/oceanwaters_ws:/oceanwaters_ws \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
+    oceanwaters/builder_nightly:ros-melodic-desktop-full-nvidia
+```
+Once conntected to the container, you can then build the project as follows:
+```bash
+cd /oceanwaters_ws  # navigate to the oceanwaters workspace
+catkin build        # build the project
+```
 
 ## License
 OceanWATERS is open source software licensed under the

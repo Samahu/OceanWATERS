@@ -28,16 +28,15 @@ This repository just adds build scripts and other miscellaneous files. OceanWATE
 - [ow_europa](https://github.com/nasa/ow_europa)
 
 ## Getting Started
-TODO
 
-### Running OceanWATERS docker images
+* If you are merely interested in running the simulation you can do so by running one of the fully baked OceanWATERS docker images:
+  - `oceanwaters/oceanwaters`
+  - `oceanwaters/oceanwaters_nightly`
+* If you are interested in doing development on the docker image you can use the builder images
+  - `oceanwaters/builder`
+  - `oceanwaters/builder_nightly`
 
-Launch OceanWATERS using the base docker image:
-```bash
-docker run -it oceanwaters/oceanwaters:ros-melodic-desktop-full
-```
-
->Note: TODO Add steps to run the simulator
+### Running the fully baked OceanWATERS docker images
 
 To run using the base gpu accelerated docker (nvidia) use the following command:
 ```bash
@@ -45,7 +44,33 @@ docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
     oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
 ```
+By default this would automatically launch the simulation, you can override the default behaviour by specifying the command
+to be run as follows:
 
+```bash
+docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
+    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia /bin/bash
+```
+
+### Running the base OceanWATERS docker image for development
+
+
+The development image doesn't contain the code baked into it, but it has all the required dependencies to build and run
+the project. So assuming that the oceanwaters workspace is located at `~/oceanwaters_ws` then you can mount the folder into
+the docker container as follows:
+
+```bash
+docker run -it --gpus all -v ~/oceanwaters_ws:/oceanwaters_ws \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
+    oceanwaters/builder_nightly:ros-melodic-desktop-full-nvidia
+```
+Once conntected to the container, you can then build the project as follows:
+```bash
+cd /oceanwaters_ws  # navigate to the oceanwaters workspace
+catkin build        # build the project
+```
 
 ## License
 OceanWATERS is open source software licensed under the

@@ -30,11 +30,11 @@ This repository just adds build scripts and other miscellaneous files. OceanWATE
 ## Getting Started
 
 * If you are merely interested in running the simulation you can do so by running one of the fully baked OceanWATERS docker images:
-  - `oceanwaters/oceanwaters`
-  - `oceanwaters/oceanwaters_nightly`
-* If you are interested in doing development on the docker image you can use the builder images
-  - `oceanwaters/builder`
-  - `oceanwaters/builder_nightly`
+  - stable channel: `oceanwaters/oceanwaters`         
+  - development channel: `oceanwaters/oceanwaters_nightly` 
+* If you are interested in doing development on the docker image you can use the builder images:
+  - stable channel: `oceanwaters/builder`
+  - development channel: `oceanwaters/builder_nightly`
 
 ### Running the fully baked OceanWATERS docker images
 

@@ -29,14 +29,13 @@ This repository just adds build scripts and other miscellaneous files. OceanWATE
 
 ## Getting Started
 
-* If you are merely interested in running the simulation you can do so by running one of the fully baked OceanWATERS docker images:
-  - stable channel: `oceanwaters/oceanwaters`         
-  - development channel: `oceanwaters/oceanwaters_nightly` 
-* If you are interested in doing development on the docker image you can use the builder images:
-  - stable channel: `oceanwaters/builder`
-  - development channel: `oceanwaters/builder_nightly`
+* [Running the fully baked OceanWATERS docker images](#running-the-fully-baked-OceanWATERS-docker-images)
+* [Running the base OceanWATERS docker image for development](#running-the-base-OceanWATERS-docker-image-for-development)
 
 ### Running the fully baked OceanWATERS docker images
+If you are merely interested in running the simulation you can do so by running one of the fully baked OceanWATERS docker images:
+  - stable channel: `oceanwaters/oceanwaters`         
+  - development channel: `oceanwaters/oceanwaters_nightly` 
 
 To run using the base gpu accelerated docker (nvidia) use the following command:
 ```bash
@@ -58,10 +57,13 @@ docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
 ```
 
 ### Running the base OceanWATERS docker image for development
-
+If you are interested in doing development on the docker image you can use the builder images:
+  - stable channel: `oceanwaters/builder`
+  - development channel: `oceanwaters/builder_nightly`
 
 The development image doesn't contain the code baked into it, but it has all the required dependencies to build and run
-the project. So assuming that the oceanwaters workspace is located at `~/oceanwaters_ws` then you can mount the folder into
+the project regardless of the user current - linux-based - host system.  
+So assuming that the oceanwaters workspace is located at `~/oceanwaters_ws` then you can mount the folder into
 the docker container as follows:
 
 ```bash

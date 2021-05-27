@@ -41,11 +41,7 @@ To run using the base gpu accelerated docker (nvidia) use the following command:
 ```bash
 docker run -it --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
-    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia /bin/bash
-```
-then once you connect to the docker container you may launch the simulation using:
-```bash
-roslaunch ow atacama_y1a.launch # or you may use europa_terminator_workspace.launch
+    oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
 ```
 By default this would automatically launch the simulation, you can override the default behaviour by specifying the command
 to be run as follows:
@@ -54,6 +50,10 @@ to be run as follows:
 docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
     oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia /bin/bash
+```
+then once you connect to the docker container you may launch the simulation using:
+```bash
+roslaunch ow atacama_y1a.launch # or you may use europa_terminator_workspace.launch
 ```
 
 ### Running the base OceanWATERS docker image for development

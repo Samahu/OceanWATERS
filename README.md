@@ -67,9 +67,10 @@ So assuming that the oceanwaters workspace is located at `~/oceanwaters_ws` then
 the docker container as follows:
 
 ```bash
-docker run -it --gpus all -v ~/oceanwaters_ws:/oceanwaters_ws \
+docker run -it --rm \
+    -v ~/oceanwaters_ws:/oceanwaters_ws \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
+    --gpus all -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
     oceanwaters/builder_nightly:ros-melodic-desktop-full-nvidia
 ```
 Once conntected to the container, you can then build the project as follows:

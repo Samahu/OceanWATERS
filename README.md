@@ -29,8 +29,9 @@ This repository just adds build scripts and other miscellaneous files. OceanWATE
 
 ## Getting Started
 
-* [Running the fully baked OceanWATERS docker images](#running-the-fully-baked-OceanWATERS-docker-images)
-* [Running the base OceanWATERS docker image for development](#running-the-base-OceanWATERS-docker-image-for-development)
+* [Running the fully baked OceanWATERS docker images](#running-the-fully-baked-oceanwaters-docker-images)
+* [Running the base OceanWATERS docker image for development](#running-the-base-oceanwaters-docker-image-for-development)
+* [Instantiate more than one terminal to the same OceanWATERS container instance](#instantiate-more-than-one-terminal-to-the-same-oceanwaters-container-instance)
 
 ### Running the fully baked OceanWATERS docker images
 If you are merely interested in running the simulation you can do so by running one of the fully baked OceanWATERS docker images:
@@ -77,6 +78,19 @@ Once conntected to the container, you can then build the project as follows:
 ```bash
 cd /oceanwaters_ws  # navigate to the oceanwaters workspace
 catkin build        # build the project
+```
+### Instantiate more than one terminal to the same OceanWATERS container instance
+Sometimes you may need to submit commands to connect another terminal to a given OceanWATERS container. 
+
+```bash
+docker ps # lists currently running containers in your system
+# note down the name or id of the running OceanWATERS container that you want to access from a different terminal
+docker exec -it <ow-container-name> /bin/bash # you can supply the container id instead
+cd /oceanwaters_ws  # navigate to the oceanwaters workspace
+source /ow_env/setup.bash   # source ROS enviroment
+source devel/setup.bash     # source your workspace again
+# Now you can execute a ROS command to a running instance of the simulation
+# for example try: rostopic list
 ```
 
 ## License

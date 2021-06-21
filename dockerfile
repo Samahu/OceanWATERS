@@ -83,7 +83,6 @@ ENTRYPOINT [ "/bin/bash", "/ow_env/builder_entrypoint.bash" ]
 CMD [ "bash" ]
 
 FROM oceanwaters_builder AS oceanwaters_docker
-RUN mkdir /OceanWATERS
 WORKDIR /OceanWATERS
 COPY src /OceanWATERS/src/
 RUN /ow_env/build_oceanwaters.bash

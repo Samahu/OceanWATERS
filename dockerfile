@@ -15,6 +15,7 @@ RUN apt-get update && \
 RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list && \
     echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -sc) main" > /etc/apt/sources.list.d/gazebo-stable.list && \
     apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 && \
+    set -o pipefail && \ 
     wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add - && \
     wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc -O - | apt-key add - && \
     wget http://repo.ros2.org/repos.key -O - | apt-key add -
@@ -79,7 +80,7 @@ echo 'PLEXIL sourced' \n \
 export GSAP_HOME=/gsap \n" > /ow_env/setup.bash
 
 ENTRYPOINT [ "/bin/bash", "/ow_env/builder_entrypoint.bash" ]
-CMD [ "bin/bash" ]
+CMD [ "bash" ]
 
 FROM oceanwaters_builder AS oceanwaters_docker
 RUN mkdir /OceanWATERS

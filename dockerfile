@@ -68,7 +68,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libglew-dev \
         default-jre \
         ant \
-        gperf
+        gperf \
+        autoconf
 
 # install the right build tool depending on ros distribution
 RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \
@@ -94,7 +95,7 @@ echo 'PLEXIL sourced' \n \
 export GSAP_HOME=/gsap \n" > /ow_env/setup.bash
 
 ENTRYPOINT [ "/bin/bash", "/ow_env/builder_entrypoint.bash" ]
-CMD [ "/bin/bash" ]
+CMD [ "bash" ]
 
 FROM oceanwaters_builder AS oceanwaters_docker
 WORKDIR /OceanWATERS

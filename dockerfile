@@ -94,7 +94,7 @@ echo 'PLEXIL sourced' \n \
 export GSAP_HOME=/gsap \n" > /ow_env/setup.bash
 
 ENTRYPOINT [ "/bin/bash", "/ow_env/builder_entrypoint.bash" ]
-CMD [ "bash" ]
+CMD [ "/bin/bash" ]
 
 FROM oceanwaters_builder AS oceanwaters_docker
 WORKDIR /OceanWATERS

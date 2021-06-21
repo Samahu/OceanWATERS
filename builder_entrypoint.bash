@@ -8,4 +8,5 @@ export HOME=/home/ow_user
 # setup ros environment
 source /ow_env/setup.bash
 
-exec gosu ow_user "$@"
+# exec gosu ow_user "$@"
+exec "$@"

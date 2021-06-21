@@ -15,19 +15,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # install gosu for a better su+exec command
-ARG GOSU_VERSION=1.10
-RUN dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
-    && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
-    && chmod +x /usr/local/bin/gosu \
-    && gosu nobody true
+RUN set -eux \
+	&& apt-get update \
+	&& apt-get install -y gosu \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& gosu nobody true
 
 RUN apt-get update \
     && add-apt-repository -y ppa:git-core/ppa \
     && apt-get install -y git \
     && rm -rf /var/lib/apt/lists/*
-
-RUN groupadd -r docker \
-    && usermod -aG docker ow_user
 
 RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list \
     && echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -sc) main" > /etc/apt/sources.list.d/gazebo-stable.list \

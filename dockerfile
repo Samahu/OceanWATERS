@@ -22,10 +22,11 @@ RUN dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
     && gosu nobody true
 
 RUN apt-get update \
-    && add-apt-repository ppa:git-core/ppa -y \
+    && add-apt-repository -y ppa:git-core/ppa \
     && apt-get install -y git \
-    && rm -rf /var/lib/apt/lists/* \
-    && groupadd -r docker \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r docker \
     && usermod -aG docker ow_user
 
 RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list \

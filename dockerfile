@@ -8,7 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 
 # install prerequisite debian packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
         gnupg2 \
         software-properties-common \
         wget \
@@ -34,7 +34,7 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc
     && wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc -O - | apt-key add - \
     && wget http://repo.ros2.org/repos.key -O - | apt-key add -
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
         ros-${ROS_DISTRO}-${ROS_DISTRO_POSTFIX} \
         ros-${ROS_DISTRO}-tf2-ros \
         ros-${ROS_DISTRO}-robot-state-publisher \
@@ -68,9 +68,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libglew-dev \
         default-jre \
         ant \
-        gperf \
-        automake \
-        libtool
+        gperf
 
 # install the right build tool depending on ros distribution
 RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \

@@ -69,7 +69,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         default-jre \
         ant \
         gperf \
-        automake
+        automake \
+        libtool
 
 # install the right build tool depending on ros distribution
 RUN if [ "$ROS_DISTRO" = "melodic" ] ; then \

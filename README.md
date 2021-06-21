@@ -12,7 +12,7 @@ worlds, such as Europa and Enceladus.
 | OceanWATERS | master | melodic-devel |
 |:-----------:|:------:|:-------------:|
 | build       | [![build[master]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS/badge.svg?branch=master)](https://github.com/Samahu/OceanWATERS/actions?query=workflow%3AOceanWATERS) | [![build[melodic-devel]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS/badge.svg?branch=melodic-devel)](https://github.com/Samahu/OceanWATERS/actions?query=workflow%3AOceanWATERS) |
-| docker      | [![docker[master]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-Docker/badge.svg?branch=master)]((https://hub.docker.com/repository/docker/oceanwaters/oceanwaters)) | [![docker[melodic-devel]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-Docker/badge.svg?branch=melodic-devel)](https://hub.docker.com/repository/docker/oceanwaters/oceanwaters) |
+| docker      | [![docker[master]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-docker/badge.svg?branch=master)]((https://hub.docker.com/repository/docker/oceanwaters/oceanwaters)) | [![docker[melodic-devel]](https://github.com/Samahu/OceanWATERS/workflows/OceanWATERS-docker/badge.svg?branch=melodic-devel)](https://hub.docker.com/repository/docker/oceanwaters/oceanwaters) |
 
 <a href="https://scan.coverity.com/projects/samahu-oceanwaters">
   <img alt="Coverity Scan Build Status"
@@ -29,18 +29,18 @@ This repository just adds build scripts and other miscellaneous files. OceanWATE
 
 ## Getting Started
 
-* If you are merely interested in running the simulation you can do so by running one of the fully baked OceanWATERS docker images:
-  - stable channel: `oceanwaters/oceanwaters`         
-  - development channel: `oceanwaters/oceanwaters_nightly` 
-* If you are interested in doing development on the docker image you can use the builder images:
-  - stable channel: `oceanwaters/builder`
-  - development channel: `oceanwaters/builder_nightly`
+* [Running the fully baked OceanWATERS docker images](#running-the-fully-baked-oceanwaters-docker-images)
+* [Running the base OceanWATERS docker image for development](#running-the-base-oceanwaters-docker-image-for-development)
+* [Instantiate more than one terminal to the same OceanWATERS container instance](#instantiate-more-than-one-terminal-to-the-same-oceanwaters-container-instance)
 
 ### Running the fully baked OceanWATERS docker images
+If you are merely interested in running the simulation you can do so by running one of the fully baked OceanWATERS docker images:
+  - stable channel: `oceanwaters/oceanwaters`         
+  - development channel: `oceanwaters/oceanwaters_nightly` 
 
 To run using the base gpu accelerated docker (nvidia) use the following command:
 ```bash
-docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
+docker run -it --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
     oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia
 ```
@@ -52,24 +52,45 @@ docker run --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
     oceanwaters/oceanwaters:ros-melodic-desktop-full-nvidia /bin/bash
 ```
+then once you connect to the docker container you may launch the simulation using:
+```bash
+roslaunch ow atacama_y1a.launch # or you may use europa_terminator_workspace.launch
+```
 
 ### Running the base OceanWATERS docker image for development
-
+If you are interested in doing development on the docker image you can use the builder images:
+  - stable channel: `oceanwaters/builder`
+  - development channel: `oceanwaters/builder_nightly`
 
 The development image doesn't contain the code baked into it, but it has all the required dependencies to build and run
-the project. So assuming that the oceanwaters workspace is located at `~/oceanwaters_ws` then you can mount the folder into
+the project regardless of the user current - linux-based - host system.  
+So assuming that the oceanwaters workspace is located at `~/oceanwaters_ws` then you can mount the folder into
 the docker container as follows:
 
 ```bash
-docker run -it --gpus all -v ~/oceanwaters_ws:/oceanwaters_ws \
+docker run -it --rm \
+    -v ~/oceanwaters_ws:/oceanwaters_ws \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
+    --gpus all -e DISPLAY -e XAUTHORITY -e NVIDIA_DRIVER_CAPABILITIES=all \
     oceanwaters/builder_nightly:ros-melodic-desktop-full-nvidia
 ```
 Once conntected to the container, you can then build the project as follows:
 ```bash
 cd /oceanwaters_ws  # navigate to the oceanwaters workspace
 catkin build        # build the project
+```
+### Instantiate more than one terminal to the same OceanWATERS container instance
+Sometimes you may need to submit commands to connect another terminal to a given OceanWATERS container. 
+
+```bash
+docker ps # lists currently running containers in your system
+# note down the name or id of the running OceanWATERS container that you want to access from a different terminal
+docker exec -it <ow-container-name> /bin/bash # you can supply the container id instead
+cd /oceanwaters_ws  # navigate to the oceanwaters workspace
+source /ow_env/setup.bash   # source ROS enviroment
+source devel/setup.bash     # source your workspace again
+# Now you can execute a ROS command to a running instance of the simulation
+# for example try: rostopic list
 ```
 
 ## License
